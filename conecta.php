@@ -1,14 +1,16 @@
 <?php
+header('Content-Type: application/json');
 $servidor = "localhost";
 $usuario = "root";
 $senha = "";
 $dbname = "sistema_atendimentos";
 
-
-$conn = new mysqli($servidor, $usuario, $senha, $dbname);
-
-
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}else
-echo "Conexão realizada com sucesso!";
+try {
+    $pdo = new PDO("mysql:host=$servidor;dbname=$dbname", $usuario, $senha);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo json_encode([
+        'status' => 'erro',
+        'mensagem' => 'Falha na conexão: ' . $e->getMessage()
+    ]);
+}
