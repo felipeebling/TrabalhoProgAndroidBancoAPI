@@ -1,0 +1,127 @@
+
+
+USE sistema_atendimentos;
+
+INSERT INTO professores (nome, email, senha)
+VALUES
+(
+    'Eliana Zen',
+    'elianazen@gmail..com',
+    '12345'
+),
+(
+    'Daniel Boemo',
+    'danielboemo@gmail.com',
+    '12345'
+);
+
+
+INSERT INTO alunos (nome, matricula, email)
+VALUES
+('Felipe Ebling Mendes', '2026001', 'felipe@gmail.com'),
+('Bernardo De Moura Coutinho', '2026002', 'bernardo@gmail.com'),
+('Arthur Jeske Neto', '2026003', 'arthur@gmail.com'),
+('Kauã Colinha', '2026004', 'kaua@gmail.com'),
+('Lucas Cassanta', '2026005', 'lucas@gmail.com');
+
+
+
+INSERT INTO atendimentos (
+    professor_id,
+    aluno_id,
+    data_hora,
+    duracao,
+    disciplina,
+    tipo,
+    modalidade,
+    local_link,
+    descricao,
+    situacao
+)
+VALUES
+(
+    1, 1, '2026-11-03 09:00:00', 30,
+    'Banco de Dados',
+    'DUVIDAS',
+    'PRESENCIAL',
+    'Sala 12',
+    'Duvidas sobre comandos SQL',
+    'AGENDADO'
+),
+(
+    1, 2, '2026-11-04 14:00:00', 45,
+    'Programacao Movel',
+    'PROJETOS',
+    'ONLINE',
+    'Link a definir',
+    'Orientacao do projeto Android',
+    'AGENDADO'
+),
+(
+    2, 3, '2026-11-10 15:30:00', 40,
+    'Algoritmos',
+    'PRATICAS',
+    'PRESENCIAL',
+    'Laboratorio 1',
+    'Orientacao de atividade pratica',
+    'SOLICITADO'
+);
+
+
+
+INSERT INTO atendimentos (
+    professor_id,
+    aluno_id,
+    data_hora,
+    duracao,
+    disciplina,
+    tipo,
+    modalidade,
+    descricao,
+    situacao,
+    conteudo_tratado,
+    compareceu,
+    encaminhamento,
+    prazo_encaminhamento,
+    encaminhamento_concluido
+)
+VALUES
+(
+    1, 4, '2026-10-27 10:00:00', 50,
+    'Banco de Dados',
+    'DUVIDAS',
+    'PRESENCIAL',
+    'Revisao de SQL',
+    'REALIZADO',
+    'JOIN, SELECT e subconsultas',
+    TRUE,
+    'Resolver lista de exercicios',
+    '2026-11-04',
+    FALSE
+),
+(
+    2, 5, '2026-10-28 13:30:00', 60,
+    'Metodologia Cientifica',
+    'TCC',
+    'ONLINE',
+    'Orientacao sobre o TCC',
+    'PARCIAL',
+    'Definicao do tema do TCC',
+    TRUE,
+    'Enviar referencial teorico',
+    '2026-10-31',
+    FALSE
+),
+(
+    2, 2, '2026-10-30 14:00:00', 45,
+    'Projetos de Software',
+    'PROJETOS',
+    'PRESENCIAL',
+    'Revisao de projeto',
+    'REALIZADO',
+    'Revisao da documentacao',
+    TRUE,
+    'Corrigir diagrama de classes',
+    '2026-11-01',
+    TRUE
+);
