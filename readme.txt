@@ -24,7 +24,8 @@ CREATE TABLE atendimentos (
     professor_id INT NOT NULL,
     aluno_id INT NOT NULL,
 
-    data_hora DATETIME NOT NULL,
+    data DATE NOT NULL,
+    hora TIME NOT NULL,
     duracao INT NOT NULL,
     disciplina VARCHAR(100),
 
