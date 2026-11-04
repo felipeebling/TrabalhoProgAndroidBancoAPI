@@ -15,29 +15,60 @@ if($acao == "") {
     case 'consultar_professores':
         consultarTodos($pdo);
         break;
+    case 'lista':
+        ListarAtendimentoDia($pdo);
+        break;
     default:
         die(json_encode(['status' => 'erro', 'mensagem' => 'Ação inválida.']));
-        break ;  
+          
  }
 }
 
 function ListarAtendimentoDia($pdo) {
-$professorId = $_GET['idprofessor'];
+$diaAtual = date("Y-m-d");// corrigir dia
 
- $diaAtual = date("Y-m-d");
-$stmt = $pdo->prepare("SELECT * FROM atendimentos WHERE data = :diaAtual and situacao = 'agendado' and professor_id = :professorId");
+$sql = "SELECT * FROM atendimentos WHERE data = :diaAtual and situacao = 'agendado'";
+
+echo($diaAtual);
+if (!empty($_GET['idprofessor']) ){
+$professorId = $_GET['idprofessor'];
+$sql .=  "AND professor_id = $professorId";
+
+}
+
+try{
+$stmt = $pdo->prepare($sql);
 $stmt->bindParam(':diaAtual', $diaAtual);
-$stmt->bindParam(':professorId', $professorId);
+
 $stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $results[] = [
+            'id' => $row['id'],
+            'professor_id' => $row['professor_id'],
+            'aluno_id' => $row['aluno_id'],
+             'data'=> $row['data'],
+             'hora'=> $row['hora'],
+             'duracao'=> $row['duracao'],
+             'disciplina'=> $row['disciplina'],
+             'tipo'=> $row['tipo'],
+             'modalidade'=> $row['modalidade'],
+             'local_link'=> $row['local_link'], ];
+}
+
+ die(json_encode($results));
+
+}catch(PDOException $e) {
+    die(json_encode(['status' => 'erro', 'mensagem' => 'Erro na consulta: ' . $e->getMessage()]));
+}
 
 }
 function consultarTodos($pdo) {
-    
+ 
+
+try{
     $stmt = $pdo->prepare("SELECT * FROM professores");
     $stmt->execute();
-    
-    
-    
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $results[] = [
             'id' => $row['id'],
@@ -45,12 +76,14 @@ function consultarTodos($pdo) {
             'email' => $row['email']
         ];
     }
-    
-    if (!empty($results)) {
-        die(json_encode($results));
-    } else {
-        die(json_encode(['status' => 'erro', 'mensagem' => 'Nenhum registro encontrado.']));
-    }
+
+    die(json_encode($results));
+}catch(PDOException $e) {
+    die(json_encode(['status' => 'erro', 'mensagem' => 'Erro na consulta: ' . $e->getMessage()]));
 }
+}
+ 
+        
+    
 
 ?>
